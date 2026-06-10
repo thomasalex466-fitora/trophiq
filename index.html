@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trophiq Catalogue Advisor</title>
+    <meta
+      name="description"
+      content="Searchable Trophiq awards, trophies, medals, mementos, and corporate gifts catalogue with quote builder."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="site-shell" id="top">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Trophiq catalogue home">
+          <img src="assets/trophiq-logo.png" alt="Trophiq logo" />
+          <span>
+            <strong>Trophiq</strong>
+            <small>Catalogue Advisor</small>
+          </span>
+        </a>
+
+        <nav class="topnav" aria-label="Primary navigation">
+          <a href="#catalog">Catalogue</a>
+          <a href="#analysis">Analysis</a>
+          <a href="#sheets">Sheets</a>
+          <a href="#quote">Quote</a>
+        </nav>
+
+        <button class="ghost-button" type="button" id="printQuoteTop">
+          Print Quote
+        </button>
+      </header>
+
+      <main>
+        <section class="catalog-workspace" aria-label="Catalogue search and quote builder">
+          <aside class="control-panel">
+            <div class="panel-kicker">153 products analysed</div>
+            <h1>Find the right award or gift.</h1>
+            <p>
+              Browse SKUs extracted from the supplied Trophiq catalogue sheets,
+              compare families, and build a shortlist for enquiry.
+            </p>
+
+            <label class="field-label" for="searchInput">
+              Search
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Code, product, occasion, material"
+                autocomplete="off"
+              />
+            </label>
+
+            <div class="filter-group" aria-label="Category filters">
+              <div class="filter-heading">Category</div>
+              <div class="chip-grid" id="categoryFilters"></div>
+            </div>
+
+            <label class="field-label" for="occasionFilter">
+              Occasion
+              <select id="occasionFilter"></select>
+            </label>
+
+            <label class="field-label" for="finishFilter">
+              Finish or material
+              <select id="finishFilter"></select>
+            </label>
+
+            <div class="stat-grid" aria-label="Catalogue totals">
+              <div>
+                <strong id="totalSkus">153</strong>
+                <span>SKUs</span>
+              </div>
+              <div>
+                <strong>8</strong>
+                <span>Families</span>
+              </div>
+              <div>
+                <strong>Pan India</strong>
+                <span>Delivery</span>
+              </div>
+            </div>
+          </aside>
+
+          <section class="results-panel" id="catalog">
+            <div class="results-head">
+              <div>
+                <p class="eyebrow">Analysed catalogue</p>
+                <h2 id="resultTitle">All catalogue products</h2>
+                <p id="resultSummary"></p>
+              </div>
+              <div class="quick-modes" role="group" aria-label="Quick product recommendations">
+                <button type="button" data-need="premium">Premium Recognition</button>
+                <button type="button" data-need="sports">Sports and Schools</button>
+                <button type="button" data-need="corporate">Corporate Awards</button>
+                <button type="button" data-need="gifting">Gifting</button>
+                <button type="button" data-need="all" class="is-active">All</button>
+              </div>
+            </div>
+
+            <div class="insight-grid" id="insightCards"></div>
+            <div class="toolbar">
+              <span id="activeFilters">Showing all products</span>
+              <button class="text-button" type="button" id="resetFilters">Reset filters</button>
+            </div>
+            <div class="product-grid" id="productGrid"></div>
+          </section>
+
+          <aside class="quote-panel" id="quote" aria-label="Quote builder">
+            <div class="quote-head">
+              <div>
+                <p class="eyebrow">Shortlist</p>
+                <h2>Quote List</h2>
+              </div>
+              <span id="quoteCount">0 items</span>
+            </div>
+
+            <div class="quote-items" id="quoteItems"></div>
+
+            <div class="enquiry-box">
+              <label class="field-label" for="eventType">
+                Event or purpose
+                <input id="eventType" type="text" placeholder="Annual day, sports meet, employee awards" />
+              </label>
+
+              <label class="field-label" for="brandingNotes">
+                Branding notes
+                <textarea
+                  id="brandingNotes"
+                  rows="3"
+                  placeholder="Logo, engraving text, ribbon colour, quantity range"
+                ></textarea>
+              </label>
+
+              <label class="field-label" for="enquiryMessage">
+                Enquiry message
+                <textarea id="enquiryMessage" rows="8" readonly></textarea>
+              </label>
+
+              <div class="quote-actions">
+                <button class="primary-button" type="button" id="copyEnquiry">Copy Enquiry</button>
+                <button class="ghost-button" type="button" id="printQuote">Print</button>
+                <button class="text-button" type="button" id="clearQuote">Clear</button>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="content-section" id="analysis">
+          <div class="section-head">
+            <p class="eyebrow">Catalogue analysis</p>
+            <h2>Which family fits the requirement?</h2>
+            <p>
+              The supplied sheets group products by material, finish, event type,
+              and customisation method. These summaries make the choice faster.
+            </p>
+          </div>
+          <div class="analysis-grid" id="categoryAnalysis"></div>
+        </section>
+
+        <section class="advisor-section" aria-label="Buying recommendations">
+          <div>
+            <p class="eyebrow">Useful pairings</p>
+            <h2>Fast combinations for common orders</h2>
+          </div>
+          <div class="recommendation-grid">
+            <article>
+              <h3>Annual corporate awards</h3>
+              <p>Use metal for weight, acrylic for modern value, and crystal for top-tier leadership recognition.</p>
+            </article>
+            <article>
+              <h3>School or college day</h3>
+              <p>Pair medals for every participant with plaques or shields for toppers, teachers, and champions.</p>
+            </article>
+            <article>
+              <h3>Sports tournament</h3>
+              <p>Use cups for overall winners, sport-specific trophies for events, and ribbons or medals for ranks.</p>
+            </article>
+            <article>
+              <h3>Client gifting</h3>
+              <p>Choose pen sets, notebooks, tumblers, USB drives, and desk organisers when branding visibility matters.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" id="sheets">
+          <div class="section-head">
+            <p class="eyebrow">Original visual sheets</p>
+            <h2>Catalogue boards from the images</h2>
+            <p>
+              Open any sheet to inspect the full visual layout, product styling,
+              and category branding.
+            </p>
+          </div>
+          <div class="sheet-gallery" id="sheetGallery"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>Trophiq Catalogue Advisor</span>
+        <span>Built from the supplied catalogue images</span>
+      </footer>
+    </div>
+
+    <div class="modal" id="sheetModal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-top">
+          <h2 id="modalTitle">Catalogue Sheet</h2>
+          <button class="icon-button" type="button" data-close-modal aria-label="Close sheet">Close</button>
+        </div>
+        <img id="modalImage" src="" alt="" />
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
