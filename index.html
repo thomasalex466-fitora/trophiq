@@ -119,16 +119,55 @@
 
             <div class="quote-items" id="quoteItems"></div>
 
-            <div class="enquiry-box">
+            <form
+              class="enquiry-box"
+              id="quoteForm"
+              action="https://formsubmit.co/trophiqinnovations@gmail.com"
+              method="POST"
+            >
+              <input type="hidden" name="_subject" value="New Trophiq quote enquiry" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="Selected products" id="selectedProductsField" />
+              <input type="hidden" name="Total quantity" id="totalQuantityField" />
+
+              <label class="field-label" for="customerName">
+                Name
+                <input id="customerName" name="Customer name" type="text" placeholder="Your full name" required />
+              </label>
+
+              <label class="field-label" for="customerMobile">
+                Mobile number
+                <input
+                  id="customerMobile"
+                  name="Mobile number"
+                  type="tel"
+                  placeholder="10 digit mobile number"
+                  pattern="[0-9+\-\s()]{7,20}"
+                  required
+                />
+              </label>
+
+              <label class="field-label" for="customerEmail">
+                Email ID
+                <input id="customerEmail" name="email" type="email" placeholder="name@example.com" required />
+              </label>
+
               <label class="field-label" for="eventType">
                 Event or purpose
-                <input id="eventType" type="text" placeholder="Annual day, sports meet, employee awards" />
+                <input
+                  id="eventType"
+                  name="Event or purpose"
+                  type="text"
+                  placeholder="Annual day, sports meet, employee awards"
+                />
               </label>
 
               <label class="field-label" for="brandingNotes">
                 Branding notes
                 <textarea
                   id="brandingNotes"
+                  name="Branding notes"
                   rows="3"
                   placeholder="Logo, engraving text, ribbon colour, quantity range"
                 ></textarea>
@@ -136,15 +175,16 @@
 
               <label class="field-label" for="enquiryMessage">
                 Enquiry message
-                <textarea id="enquiryMessage" rows="8" readonly></textarea>
+                <textarea id="enquiryMessage" name="Full enquiry message" rows="8" readonly></textarea>
               </label>
 
               <div class="quote-actions">
-                <button class="primary-button" type="button" id="copyEnquiry">Copy Enquiry</button>
+                <button class="primary-button" type="submit" id="sendEnquiry">Send Quote</button>
+                <button class="ghost-button" type="button" id="copyEnquiry">Copy</button>
                 <button class="ghost-button" type="button" id="printQuote">Print</button>
                 <button class="text-button" type="button" id="clearQuote">Clear</button>
               </div>
-            </div>
+            </form>
           </aside>
         </section>
 

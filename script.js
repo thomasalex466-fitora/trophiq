@@ -561,6 +561,7 @@ function renderQuote() {
   });
 
   updateMessage();
+  updateFormFields();
   saveQuote();
 }
 
@@ -612,22 +613,28 @@ function saveQuote() {
 }
 
 function updateMessage() {
+  const customerName = $("#customerName").value.trim();
+  const customerMobile = $("#customerMobile").value.trim();
+  const customerEmail = $("#customerEmail").value.trim();
   const eventType = $("#eventType").value.trim();
   const brandingNotes = $("#brandingNotes").value.trim();
   const lines = [
     "Hello Trophiq,",
     "",
-    "Please share pricing, branding options, and delivery timeline for:"
+    "A customer has requested pricing, branding options, and delivery timeline through the website.",
+    "",
+    "Customer Details:",
+    `Name: ${customerName || "To be provided"}`,
+    `Mobile: ${customerMobile || "To be provided"}`,
+    `Email: ${customerEmail || "To be provided"}`,
+    "",
+    "Selected Products:"
   ];
 
   if (quote.length) {
-    quote.forEach((item, index) => {
-      const product = productByCode[item.code];
-      const category = categoryById[product.category];
-      lines.push(`${index + 1}. ${product.code} - ${product.name} (${category.name}, ${product.size}) x ${item.qty}`);
-    });
+    lines.push(...quoteSummaryLines());
   } else {
-    lines.push("1. I am shortlisting products from the catalogue.");
+    lines.push("No products selected yet.");
   }
 
   lines.push("");
@@ -637,6 +644,41 @@ function updateMessage() {
   lines.push("Kindly include bulk order options and delivery estimate.");
 
   $("#enquiryMessage").value = lines.join("\n");
+}
+
+function quoteSummaryLines() {
+  return quote.map((item, index) => {
+    const product = productByCode[item.code];
+    const category = categoryById[product.category];
+    return `${index + 1}. ${product.code} - ${product.name} (${category.name}, ${product.size}) x ${item.qty}`;
+  });
+}
+
+function quoteTotalQuantity() {
+  return quote.reduce((sum, item) => sum + item.qty, 0);
+}
+
+function updateFormFields() {
+  $("#selectedProductsField").value = quote.length ? quoteSummaryLines().join("\n") : "No products selected";
+  $("#totalQuantityField").value = String(quoteTotalQuantity());
+}
+
+function handleQuoteSubmit(event) {
+  updateMessage();
+  updateFormFields();
+
+  if (!quote.length) {
+    event.preventDefault();
+    showToast("Please add at least one product to the quote.");
+    $("#catalog").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  if (!$("#quoteForm").checkValidity()) {
+    return;
+  }
+
+  showToast("Sending quote enquiry...");
 }
 
 function openSheet(id) {
@@ -729,8 +771,12 @@ function init() {
   });
 
   $("#resetFilters").addEventListener("click", resetFilters);
+  $("#customerName").addEventListener("input", updateMessage);
+  $("#customerMobile").addEventListener("input", updateMessage);
+  $("#customerEmail").addEventListener("input", updateMessage);
   $("#eventType").addEventListener("input", updateMessage);
   $("#brandingNotes").addEventListener("input", updateMessage);
+  $("#quoteForm").addEventListener("submit", handleQuoteSubmit);
   $("#copyEnquiry").addEventListener("click", copyEnquiry);
   $("#printQuote").addEventListener("click", () => window.print());
   $("#printQuoteTop").addEventListener("click", () => window.print());
